@@ -9,6 +9,9 @@ export const getLocations = async (
   const res = await fetch(url.href, { cache: "no-store" });
   const data = await res.json();
 
-  return data;
+  return {
+    ok: res.ok,
+    data: data,
+  };
 };
 
