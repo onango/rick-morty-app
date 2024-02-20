@@ -14,8 +14,12 @@ const LocationSearchBar: FC<LocationSearchBarProps> = ({ locationName }) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const searchValue = e.target?.elements?.search?.value;
 
-    
+    if (!searchValue) {
+      return;
+    }
+    router.push(`/?name=${searchValue}`);
   };
 
   const searchDefaultValue = locationName || undefined;
