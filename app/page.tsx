@@ -1,5 +1,8 @@
 import { Suspense } from "react";
 import { NavBar } from "@/app/components/NavBar";
+import {Spinner} from "@/app/components/Spinner";
+import { LocationSearchBar } from "@/app/components/LocationSearchBar";
+import { LocationResultScreen } from "@/app/screens/LocationResultScreen";
 import { getLocations } from "@/utils/getLocations";
 
 
@@ -16,6 +19,15 @@ export default async function Home({
   console.log(data);
 
   return (
-    <>Home</>
+    <main>
+      <div>
+        <NavBar />
+        <div className="h-full">
+          <div className="mt-10  px-10">
+            <LocationSearchBar locationName={locationName} />
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
