@@ -1,7 +1,8 @@
 import { FC } from "react";
 import Link from "next/link";
 import { LocationRequest } from "@/types/api.types";
-import { LocationCard } from "@/app/components/LocationCard"; // Assuming you have a LocationCard component
+import { LocationCard } from "@/app/components/LocationCard"; 
+import { Pagination } from "@/app/components/Pagination";
 
 interface LocationResultScreenProps {
   data: LocationRequest;
@@ -9,8 +10,10 @@ interface LocationResultScreenProps {
 }
 
 const LocationResultScreen: FC<LocationResultScreenProps> = ({
+  currentPage,
   data: {
     results,
+    info: { pages },
   },
 }) => {
   return (
@@ -23,6 +26,12 @@ const LocationResultScreen: FC<LocationResultScreenProps> = ({
             </Link>
           );
         })}
+      </div>
+      <div className="flex py-20 justify-center ">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={pages}
+        />
       </div>
     </div>
   );
