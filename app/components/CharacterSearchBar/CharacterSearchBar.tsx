@@ -9,7 +9,19 @@ interface SearchBarProps {
 const CharacterSearchBar: FC<SearchBarProps> = ({ characterName }) => {
   return (
     <div className="flex h-12 w-full">
-    <form className="flex">
+    <select
+      className="border w-1/5 min-w-fit  rounded-l-lg pl-3 bg-transparent border-gray-700 placeholder-gray-400 text-black  focus:border-gray-500 outline-none"
+    >
+      <option disabled={true} value="default">
+        Filter by gender
+      </option>
+      <option value="male">male</option>
+      <option value="female">female</option>
+      <option value="genderless">genderless</option>
+      <option value="unknown">unknown</option>
+    </select>
+
+    <form className="w-4/5 flex">
       <input
         autoComplete="off"
         type="search"
