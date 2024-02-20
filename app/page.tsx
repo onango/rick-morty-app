@@ -25,6 +25,10 @@ export default async function Home({
         <div className="h-full">
           <div className="mt-10  px-10">
             <LocationSearchBar locationName={locationName} />
+            <LocationResultScreen
+                  data={data}
+                  currentPage={pageNumber}
+                />
           </div>
         </div>
       </div>
