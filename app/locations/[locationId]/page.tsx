@@ -24,6 +24,11 @@ export default async function Home({
         <div className="h-full bg-no-repeat">
           <div className="mt-10  px-10">
             <CharacterSearchBar characterName={characterName} />
+            <SearchResultScreen
+                  data={data}
+                  currentPage={pageNumber}
+                  gender={gender}
+                />
           </div>
         </div>
       </div>
