@@ -28,17 +28,28 @@ const CharacterPage = ({
     fetchCharacterData();
   }, [characterId]);
 
+  const handleBackButtonClick = () => {
+    // Navigate back to the previous page
+    window.history.back();
+  };
+
+  const handleAddNotesClick = () => {
+    // Toggle the visibility of the notes form
+  };
+
   return (
     <div className="flex flex-1 justify-center mt-20">
       <div className="w-11/12 md:w-2/3 max-w-screen-md">
-      <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded inline-flex items-center">
-            <svg className="fill-current w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 20a.997.997 0 0 1-.707-.293L12 13.414l-6.293 6.293a.999.999 0 1 1-1.414-1.414l7-7a.999.999 0 0 1 1.414 0l7 7c.39.39.39 1.024 0 1.414A.999.999 0 0 1 19 20z"/></svg>
-            <span>Back to Location</span>
-          </button>
-          <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded inline-flex items-center">
-            <svg className="fill-current w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            <span>Add Notes</span>
-          </button>
+      <div className="flex space-x-4 mt-4"> 
+        <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded inline-flex items-center" onClick={handleBackButtonClick}>
+          <svg className="fill-current w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 20a.997.997 0 0 1-.707-.293L12 13.414l-6.293 6.293a.999.999 0 1 1-1.414-1.414l7-7a.999.999 0 0 1 1.414 0l7 7c.39.39.39 1.024 0 1.414A.999.999 0 0 1 19 20z"/></svg>
+          <span>Back to Location</span>
+        </button>
+        <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded inline-flex items-center" onClick={handleAddNotesClick}>
+          <svg className="fill-current w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          <span>Add Notes</span>
+        </button>
+      </div>
         <div className="flex flex-1 justify-center">
           <Suspense fallback={<div>Loading...</div>}>
             <div className="w-full">
