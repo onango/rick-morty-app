@@ -12,9 +12,17 @@ const LocationSearchBar: FC<LocationSearchBarProps> = ({ locationName }) => {
   const router = useRouter();
  
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    
+  };
+
+  const searchDefaultValue = locationName || undefined;
+
   return (
     <div className="flex h-12 w-full">
-      <form className="w-full flex">
+      <form onSubmit={onSubmit} className="w-full flex">
         <input
           ref={inputRef}
           autoComplete="off"
@@ -24,6 +32,7 @@ const LocationSearchBar: FC<LocationSearchBarProps> = ({ locationName }) => {
           className="h-full w-full pl-5 text-sm  border border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none"
           placeholder="Enter location name to search ..."
           required
+          defaultValue={searchDefaultValue}
         />
         <button
           type="submit"
