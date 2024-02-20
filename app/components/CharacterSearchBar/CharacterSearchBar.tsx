@@ -36,6 +36,7 @@ const CharacterSearchBar: FC<SearchBarProps> = ({ characterName }) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    /* @ts-expect-error */
     const searchValue = e.target?.elements?.search?.value;
 
     if (!searchValue) {
