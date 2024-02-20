@@ -1,6 +1,7 @@
 import { Character } from "@/types/api.types";
 import { FC } from "react";
 import { TitleFormat } from "../TitleFormat";
+import Image from "next/image";
 
 interface CharacterCardProps {
   type: "small" | "full";
@@ -32,6 +33,15 @@ const CharacterCard: FC<CharacterCardProps> = ({
     <div className="aspect-w-16 aspect-h-9 mt-3 ">
       <div className="flex w-full justify-center  overflow-hidden rounded-xl border border-gray-600">
         <div className="flex flex-1">
+          <div className=" flex w-2/5">
+            <Image
+              alt={character.name}
+              src={character.image}
+              width={800}
+              height={600}
+              className="object-cover"
+            />
+          </div>
           <div
             className={`${cardDynamicStyle.descriptionMargins[type]} flex w-3/5  flex-1 flex-col`}
           >
