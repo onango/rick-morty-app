@@ -100,12 +100,120 @@ interface PaginationProps {
   gender: string | undefined;
 }
 
+const bodyUrl = "/?page=";
+const genderUrl = "&gender=";
+
+const getPaginationUrlAndNumber = (
+  currentPage: number,
+  totalPages: number,
+  pageIncrementor: number,
+  gender: string | undefined
+) => {
+  const url =
+    currentPage + pageIncrementor > 0 &&
+    currentPage + pageIncrementor < totalPages
+      ? bodyUrl + (currentPage + pageIncrementor)
+      : "";
+
+  const urlWithGender = gender && url ? url + `${genderUrl}${gender}` : url;
+
+  const pageNumber = currentPage + pageIncrementor;
+
+  return {
+    url: urlWithGender,
+    pageNumber,
+  };
+};
+
 const Pagination: FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  gender,
 }) => {
+  const prevPageData = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    -10,
+    gender
+  );
+  const nextPageData = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    10,
+    gender
+  );
+
+  const prevPageMinus3Data = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    -3,
+    gender
+  );
+
+  const prevPageMinus2Data = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    -2,
+    gender
+  );
+
+  const prevPageMinus1Data = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    -1,
+    gender
+  );
+
+  const prevPagePlus3Data = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    3,
+    gender
+  );
+
+  const prevPagePlus2Data = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    2,
+    gender
+  );
+
+  const prevPagePlus1Data = getPaginationUrlAndNumber(
+    currentPage,
+    totalPages,
+    1,
+    gender
+  );
 
   return (
     <nav aria-label="Page navigation">
-      
+      <ul className="inline-flex items-center -space-x-px">
+        {prevPageData.url ? <PrevPage data={prevPageData} /> : null}
+
+        {prevPageMinus3Data.url ? (
+          <StandardPage data={prevPageMinus3Data} />
+        ) : null}
+        {prevPageMinus2Data.url ? (
+          <StandardPage data={prevPageMinus2Data} />
+        ) : null}
+        {prevPageMinus1Data.url ? (
+          <StandardPage data={prevPageMinus1Data} />
+        ) : null}
+
+        <CurrentPage pageNumber={currentPage} />
+
+        {prevPagePlus1Data.url ? (
+          <StandardPage data={prevPagePlus1Data} />
+        ) : null}
+        {prevPagePlus2Data.url ? (
+          <StandardPage data={prevPagePlus2Data} />
+        ) : null}
+        {prevPagePlus3Data.url ? (
+          <StandardPage data={prevPagePlus3Data} />
+        ) : null}
+
+        {nextPageData.url ? <NextPage data={nextPageData} /> : null}
+      </ul>
     </nav>
   );
 };
