@@ -25,10 +25,18 @@ export default async function Home({
         <div className="h-full">
           <div className="mt-10  px-10">
             <LocationSearchBar locationName={locationName} />
-            <LocationResultScreen
+            <Suspense fallback={<Spinner />}>
+              {ok && data ? (
+                <LocationResultScreen
                   data={data}
                   currentPage={pageNumber}
                 />
+              ) : (
+                <div className="mt-10 flex text-black flex-1 justify-center">
+                  <p>Location not found</p>
+                </div>
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
