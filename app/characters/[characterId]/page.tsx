@@ -10,6 +10,8 @@ const CharacterPage = ({
   params: { characterId: string };
 }) => {
   const [characterData, setCharacterData] = useState(null);
+  const [notes, setNotes] = useState('');
+  const [showNotesForm, setShowNotesForm] = useState(false);
 
   useEffect(() => {
     const fetchCharacterData = async () => {
