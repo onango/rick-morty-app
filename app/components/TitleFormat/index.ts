@@ -1,1 +1,1 @@
-export { default as TitleSubtitle } from "./TitleFormat";
+export { default as TitleFormat } from "./TitleFormat";
