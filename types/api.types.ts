@@ -52,3 +52,10 @@ export interface LocationRequest {
   info: Info;
   results: Location[];
 }
+
+export enum GenderApiRequest {
+  Female = "female",
+  Male = "male",
+  Unknown = "unknown",
+  Genderless = "genderless",
+}
