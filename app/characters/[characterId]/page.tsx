@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CharacterCard } from "@/app/components/CharacterCard";
+import { Suspense } from "react";
 
 const CharacterPage = ({
   params: { characterId },
@@ -31,7 +32,13 @@ const CharacterPage = ({
     <div className="flex flex-1 justify-center mt-20">
       <div className="w-11/12 md:w-2/3 max-w-screen-md">
         <div className="flex flex-1 justify-center">
-        <CharacterCard type="full" character={characterData} characterNotes="" />
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className="w-full">
+              {characterData && (
+                  <CharacterCard type="full" character={characterData} characterNotes="" />
+              )}
+            </div>
+          </Suspense>
         </div>
       </div>
     </div>
