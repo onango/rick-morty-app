@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { CharacterCard } from "@/app/components/CharacterCard";
 import { CharacterRequest } from "@/types/api.types";
+import { Pagination } from "@/app/components/Pagination";
 
 interface SearchResultScreenProps {
   data: CharacterRequest;
@@ -27,6 +28,13 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
             </Link>
           );
         })}
+      </div>
+      <div className="flex py-20 justify-center ">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={pages}
+          gender={gender}
+        />
       </div>
     </div>
   );
