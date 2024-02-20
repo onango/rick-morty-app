@@ -9,7 +9,10 @@ export const getCharacters = async (
   name && url.searchParams.set("name", name);
 
   const res = await fetch(url.href, { cache: "no-store" });
-  
-  console.log(res);
+  const covertToJson = await res.json();
+  return {
+    ok: res.ok,
+    data: covertToJson,
+  };
 };
 
