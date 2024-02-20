@@ -68,18 +68,22 @@ const CharacterPage = ({
           <Suspense fallback={<div>Loading...</div>}>
             <div className="w-full">
               {characterData && (
-                  <CharacterCard type="full" character={characterData} characterNotes="" />
+                 <>
+                 {showNotesForm && (
+                 <form>
+                   <label htmlFor="notes">Add Notes:</label>
+                   <textarea
+                     id="notes"
+                     name="notes"
+                     value={notes}
+                     className="h-full w-full pl-5 text-sm  border border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none"
+                     onChange={handleNotesChange}
+                   />
+                 </form>
+                 )}
+                 <CharacterCard type="full" character={characterData} characterNotes={notes} />
+               </>
               )}
-              <form>
-                    <label htmlFor="notes">Add Notes:</label>
-                    <textarea
-                      id="notes"
-                      name="notes"
-                      value={notes}
-                      className="h-full w-full pl-5 text-sm  border border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none"
-                      onChange={handleNotesChange}
-                    />
-                  </form>
             </div>
           </Suspense>
         </div>
