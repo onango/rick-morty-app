@@ -16,7 +16,6 @@ export default async function Home({
   const gender = urlSearchParams.get("gender") || undefined;
   const characterName = urlSearchParams.get("name") || undefined;
   const { ok, data } = await getCharacters(pageNumber, gender, characterName);
-
   return (
     <main>
       <div>
@@ -24,11 +23,19 @@ export default async function Home({
         <div className="h-full bg-no-repeat">
           <div className="mt-10  px-10">
             <CharacterSearchBar characterName={characterName} />
-            <SearchResultScreen
+            <Suspense fallback={<Spinner />}>
+              {ok && data ? (
+                <SearchResultScreen
                   data={data}
                   currentPage={pageNumber}
                   gender={gender}
                 />
+              ) : (
+                <div className="mt-10 flex flex-1 justify-center">
+                  <p>Character not found</p>
+                </div>
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
