@@ -59,3 +59,8 @@ export enum GenderApiRequest {
   Unknown = "unknown",
   Genderless = "genderless",
 }
+
+export interface CharacterRequest {
+  info: Info;
+  results: Character[];
+}
