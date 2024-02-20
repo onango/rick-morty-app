@@ -30,6 +30,18 @@ const CharacterPage = ({
     fetchCharacterData();
   }, [characterId]);
 
+  useEffect(() => {
+    // Access localStorage only in the client-side
+    const storedNotes = localStorage.getItem(`character_${characterId}_notes`);
+    setNotes(storedNotes || '');
+  }, [characterId]);
+
+  const handleNotesChange = (event) => {
+    setNotes(event.target.value);
+    // Store notes in local storage
+    localStorage.setItem(`character_${characterId}_notes`, event.target.value);
+  };
+
   const handleBackButtonClick = () => {
     // Navigate back to the previous page
     window.history.back();
@@ -65,6 +77,7 @@ const CharacterPage = ({
                       name="notes"
                       value={notes}
                       className="h-full w-full pl-5 text-sm  border border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none"
+                      onChange={handleNotesChange}
                     />
                   </form>
             </div>
