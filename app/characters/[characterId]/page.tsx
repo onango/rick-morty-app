@@ -58,6 +58,15 @@ const CharacterPage = ({
               {characterData && (
                   <CharacterCard type="full" character={characterData} characterNotes="" />
               )}
+              <form>
+                    <label htmlFor="notes">Add Notes:</label>
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      value={notes}
+                      className="h-full w-full pl-5 text-sm  border border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none"
+                    />
+                  </form>
             </div>
           </Suspense>
         </div>
