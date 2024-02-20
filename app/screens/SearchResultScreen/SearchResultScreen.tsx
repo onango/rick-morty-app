@@ -24,7 +24,7 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
         {results.map((character) => {
           return (
             <Link href={`/characters/${character.id}`} key={character.id}>
-              <CharacterCard type="small" character={character} />
+              <CharacterCard type="small" character={character} characterNotes="" />
             </Link>
           );
         })}
