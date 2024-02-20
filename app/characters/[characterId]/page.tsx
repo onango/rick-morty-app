@@ -49,6 +49,7 @@ const CharacterPage = ({
 
   const handleAddNotesClick = () => {
     // Toggle the visibility of the notes form
+    setShowNotesForm(!showNotesForm);
   };
 
   return (
