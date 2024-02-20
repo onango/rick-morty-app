@@ -97,7 +97,7 @@ const NextPage: FC<PageDataType> = ({ data: { url } }) => {
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  gender: string | undefined;
+  gender?: string | undefined;
 }
 
 const bodyUrl = "/?page=";
