@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { CharacterCard } from "@/app/components/CharacterCard";
 import { CharacterRequest } from "@/types/api.types";
 import { Pagination } from "@/app/components/Pagination";
@@ -18,6 +20,12 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
   },
   gender,
 }) => {
+  const [currentLocation, setCurrentLocation] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentLocation(window.location.pathname);
+  }, []);
+
   return (
     <div className="container mx-auto">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -34,6 +42,7 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
           currentPage={currentPage}
           totalPages={pages}
           gender={gender}
+          currentLocation={currentLocation || ''}
         />
       </div>
     </div>
