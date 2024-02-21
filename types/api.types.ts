@@ -63,4 +63,6 @@ export enum GenderApiRequest {
 export interface CharacterRequest {
   info: Info;
   results: Character[];
+  raw_results: [],
+  itemsPerPage: number
 }
