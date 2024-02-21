@@ -50,6 +50,23 @@ export default function Home({ params, searchParams }: { params: { locationId: s
       return;
     }
     console.log(searchValue, "searched");
+    const fetchData = async () => {
+      try {
+        const { ok, data } = await getCharacters(pageNumber, gender, searchValue, locationId, residents.split(',').map(residentId => parseInt(residentId)));
+        console.log(ok, data, residents.split(',').map(residentId => parseInt(residentId)));
+        if (ok && data) {
+          setCharacters(data);
+        } else {
+          setCharacters(null);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   };
 
   const searchDefaultValue = characterName || undefined;
