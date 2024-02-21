@@ -12,7 +12,6 @@ export default function Home({ params, searchParams }: { params: { locationId: s
   const urlSearchParams = new URLSearchParams(searchParams);
   const pageNumber = Number(urlSearchParams.get('page')) || 1;
   const gender = urlSearchParams.get('gender') || undefined;
-  const characterName = urlSearchParams.get('name') || undefined;
 
   const residents = urlSearchParams.get('residents') || undefined;
 
@@ -20,11 +19,12 @@ export default function Home({ params, searchParams }: { params: { locationId: s
   const [loading, setLoading] = useState(true);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { ok, data } = await getCharacters(pageNumber, gender, characterName, locationId, residents.split(',').map(residentId => parseInt(residentId)));
+        const { ok, data } = await getCharacters(pageNumber, gender, searchValue, locationId, residents.split(',').map(residentId => parseInt(residentId)));
         console.log(data, residents.split(',').map(residentId => parseInt(residentId)));
         if (ok && data) {
           setCharacters(data);
@@ -41,36 +41,30 @@ export default function Home({ params, searchParams }: { params: { locationId: s
     fetchData();
   }, [params, searchParams]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    /* @ts-expect-error */
-    const searchValue = e.target?.elements?.search?.value;
-
-    if (!searchValue) {
+    const updatedSearchValue = e.currentTarget.elements.search.value;
+    setSearchValue(updatedSearchValue);
+  
+    if (!updatedSearchValue) {
       return;
     }
-    console.log(searchValue, "searched");
-    const fetchData = async () => {
-      try {
-        const { ok, data } = await getCharacters(pageNumber, gender, searchValue, locationId, residents.split(',').map(residentId => parseInt(residentId)));
-        console.log(ok, data, residents.split(',').map(residentId => parseInt(residentId)));
-        if (ok && data) {
-          setCharacters(data);
-        } else {
-          setCharacters(null);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
+  
+    try {
+      setLoading(true);
+      const { ok, data } = await getCharacters(pageNumber, gender, updatedSearchValue, locationId, residents.split(',').map(residentId => parseInt(residentId)));
+      if (ok && data) {
+        setCharacters(data);
+      } else {
+        setCharacters(null);
       }
-    };
-
-    fetchData();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const searchDefaultValue = characterName || undefined;
-
+  
   return (
     <main>
       <div>
@@ -88,7 +82,7 @@ export default function Home({ params, searchParams }: { params: { locationId: s
                 className="h-full w-full pl-5 text-sm  bg-transparent border border-r  border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none  "
                 placeholder="Search character by name..."
                 required
-                defaultValue={searchDefaultValue}
+                defaultValue={searchValue}
               />
               <button
                 type="submit"
