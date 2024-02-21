@@ -30,7 +30,11 @@ const ResultsPagination: FC<ResultsPaginationProps> = ({ currentPage, totalPages
         <button
           key={i}
           onClick={() => handlePageClick(i)}
-          className={currentPage === i ? 'current-page' : ''}
+          className={`px-3 py-1 mx-1 rounded ${
+            currentPage === i
+              ? 'bg-blue-500 text-white focus:outline-none'
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none'
+          }`}
         >
           {i}
         </button>
@@ -40,12 +44,20 @@ const ResultsPagination: FC<ResultsPaginationProps> = ({ currentPage, totalPages
   };
 
   return (
-    <div className="pagination">
-      <button onClick={handlePrevClick} disabled={currentPage === 1}>
+    <div className="pagination flex items-center justify-center mt-6">
+      <button
+        onClick={handlePrevClick}
+        disabled={currentPage === 1}
+        className="px-3 py-1 mr-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none"
+      >
         Previous
       </button>
       {getPageNumbers()}
-      <button onClick={handleNextClick} disabled={currentPage === totalPages}>
+      <button
+        onClick={handleNextClick}
+        disabled={currentPage === totalPages}
+        className="px-3 py-1 ml-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none"
+      >
         Next
       </button>
     </div>
