@@ -32,7 +32,10 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
   const handlePageChange = async (page: number) => {
     console.log('clicked', page, currentLocation, itemsPerPage);
     try {
-      setCharacters([]);
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = Math.min(startIndex + itemsPerPage, raw_results.length); 
+      const results = raw_results.slice(startIndex, endIndex);
+      setCharacters(results);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
