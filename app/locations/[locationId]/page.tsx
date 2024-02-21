@@ -15,13 +15,16 @@ export default function Home({ params, searchParams }: { params: { locationId: s
   const gender = urlSearchParams.get('gender') || undefined;
   const characterName = urlSearchParams.get('name') || undefined;
 
+  const residents = urlSearchParams.get('residents') || undefined;
+
   const [characters, setCharacters] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { ok, data } = await getCharacters(pageNumber, gender, characterName, locationId);
+        const { ok, data } = await getCharacters(pageNumber, gender, characterName, locationId, residents.split(',').map(residentId => parseInt(residentId)));
+        console.log(data, residents.split(',').map(residentId => parseInt(residentId)));
         if (ok && data) {
           setCharacters(data);
         } else {
