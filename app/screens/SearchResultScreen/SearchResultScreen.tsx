@@ -5,6 +5,7 @@ import { FC, useEffect, useState } from "react";
 import { CharacterCard } from "@/app/components/CharacterCard";
 import { CharacterRequest } from "@/types/api.types";
 import { Pagination } from "@/app/components/Pagination";
+import ResultsPagination from "./ResultsPagination";
 
 interface SearchResultScreenProps {
   data: CharacterRequest;
@@ -26,6 +27,15 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
     setCurrentLocation(window.location.pathname);
   }, []);
 
+
+  const handlePageChange = async (page: number) => {
+    console.log('clicked', page);
+    try {
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -38,11 +48,10 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
         })}
       </div>
       <div className="flex py-20 justify-center ">
-        <Pagination
+        <ResultsPagination
           currentPage={currentPage}
           totalPages={pages}
-          gender={gender}
-          currentLocation={currentLocation || ''}
+          onPageChange={handlePageChange} 
         />
       </div>
     </div>
