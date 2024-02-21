@@ -22,6 +22,7 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
   gender,
 }) => {
   const [currentLocation, setCurrentLocation] = useState<string | null>(null);
+  const [characters, setCharacters] = useState(results);
 
   useEffect(() => {
     setCurrentLocation(window.location.pathname);
@@ -29,8 +30,9 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
 
 
   const handlePageChange = async (page: number) => {
-    console.log('clicked', page);
+    console.log('clicked', page, currentLocation);
     try {
+      setCharacters([]);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -39,7 +41,7 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
   return (
     <div className="container mx-auto">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {results.map((character) => {
+        {characters.map((character) => {
           return (
             <Link href={`/characters/${character.id}`} key={character.id}>
               <CharacterCard type="small" character={character} characterNotes="" />
