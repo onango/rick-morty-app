@@ -20,24 +20,38 @@ export const getCharacters = async (
 
   const res = await fetch(url.href, { cache: "no-store" });
   const data = await res.json();
+
+  const itemsPerPage = 10;
   
-  // return {
-  //   ok: res.ok,
-  //   data: data
-  // };
   const count = data.length;
-  const pages = Math.ceil(count / 20); 
+  const totalPages = Math.ceil(count / itemsPerPage); 
+
+  let next = null;
+  let prev = null;
+  if (page < totalPages) {
+    next = `/?page=${page + 1}`;
+  }
+  if (page > 1) {
+    prev = `/?page=${page - 1}`;
+  }
+
+  // Calculate items to show on this page
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, count); 
+  const results = data.slice(startIndex, endIndex);
 
   return {
     ok: res.ok,
     data: {
       info: {
         count,
-        pages,
-        next: null,
-        prev: null
+        pages: totalPages,
+        next,
+        prev
       },
-      results: data
+      results,
+      raw_results: data,
+      itemsPerPage
     }
   };
 };
