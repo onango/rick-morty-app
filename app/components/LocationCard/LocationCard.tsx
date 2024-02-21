@@ -9,11 +9,7 @@ const LocationCard: FC<LocationCardProps> = ({ location }) => {
   return (
     <article className="overflow-hidden rounded-lg border border-gray-600">
         <header className="flex items-center justify-between leading-tight p-2 md:p-4">
-            <h1 className="text-lg">
-                <a className="no-underline hover:underline text-black" href={`/locations/${location.id}`} key={location.id}>
-                {location.name}
-                </a>
-            </h1>
+            <h1 className="text-lg">{location.name}</h1>
             
         </header>
 
