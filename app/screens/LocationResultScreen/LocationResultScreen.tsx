@@ -28,8 +28,16 @@ const LocationResultScreen: FC<LocationResultScreenProps> = ({
     <div className="container mx-auto">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {results.map((location) => {
+          // Extracting resident IDs from the location
+          const residentIds = location.residents.map(residentUrl => {
+            const parts = residentUrl.split('/');
+            return parts[parts.length - 1];
+          });
+          // Joining resident IDs with a comma separator
+          const residentIdsString = residentIds.join(',');
+
           return (
-            <Link href={`/locations/${location.id}`} key={location.id}>
+            <Link href={`/locations/${location.id}?residents=${residentIdsString}`} key={location.id}>
               <LocationCard location={location} />
             </Link>
           );
