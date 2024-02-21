@@ -10,16 +10,16 @@ import ResultsPagination from "./ResultsPagination";
 interface SearchResultScreenProps {
   data: CharacterRequest;
   currentPage: number;
-  gender: string | undefined;
 }
 
 const SearchResultScreen: FC<SearchResultScreenProps> = ({
   currentPage,
   data: {
     results,
+    raw_results,
+    itemsPerPage,
     info: { pages },
   },
-  gender,
 }) => {
   const [currentLocation, setCurrentLocation] = useState<string | null>(null);
   const [characters, setCharacters] = useState(results);
@@ -30,7 +30,7 @@ const SearchResultScreen: FC<SearchResultScreenProps> = ({
 
 
   const handlePageChange = async (page: number) => {
-    console.log('clicked', page, currentLocation);
+    console.log('clicked', page, currentLocation, itemsPerPage);
     try {
       setCharacters([]);
     } catch (error) {
