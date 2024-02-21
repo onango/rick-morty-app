@@ -1,20 +1,7 @@
 "use client";
 
-import { ChangeEvent, FC, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { GenderApiRequest } from "@/types/api.types";
-
-const getGender = (gender: GenderApiRequest | string) => {
-  if (Object.values(GenderApiRequest).includes(gender as GenderApiRequest)) {
-    return gender;
-  }
-
-  if (gender.length) {
-    return GenderApiRequest.Unknown;
-  } else {
-    return "default";
-  }
-};
+import { FC, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 interface SearchBarProps {
   characterName: string | undefined;
@@ -22,17 +9,7 @@ interface SearchBarProps {
 
 const CharacterSearchBar: FC<SearchBarProps> = ({ characterName }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const searchParams = useSearchParams();
   const router = useRouter();
-
-  const search = searchParams && searchParams.get("gender");
-  const defaultFilter = search ? getGender(search) : "default";
-  const onSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-    router.push(`/?gender=${e.target.value}`);
-  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,28 +19,17 @@ const CharacterSearchBar: FC<SearchBarProps> = ({ characterName }) => {
     if (!searchValue) {
       return;
     }
-    router.push(`/?name=${searchValue}`);
+    const currentPath = window.location.pathname;
+    const updatedPath = currentPath.replace(/&name=[^&]*/, '');
+    const newUrl = `${updatedPath}${updatedPath.includes('?') ? '&' : '?'}name=${searchValue}`;
+    router.push(newUrl);
   };
 
   const searchDefaultValue = characterName || undefined;
   return (
-   <div className="flex h-12 w-full">
-      <select
-        onChange={onSelect}
-        defaultValue={defaultFilter}
-        id="gender"
-        className="border w-1/5 min-w-fit  rounded-l-lg pl-3 bg-transparent border-gray-700 placeholder-gray-400 text-black  focus:border-gray-500 outline-none"
-      >
-        <option disabled={true} value="default">
-          Filter by gender
-        </option>
-        <option value="male">male</option>
-        <option value="female">female</option>
-        <option value="genderless">genderless</option>
-        <option value="unknown">unknown</option>
-      </select>
+    <div className="flex h-12 w-full">
 
-      <form onSubmit={onSubmit} className="w-4/5 flex">
+      <form onSubmit={onSubmit} className="w-full flex">
         <input
           ref={inputRef}
           autoComplete="off"
