@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavBar } from '@/app/components/NavBar';
 import { Spinner } from '@/app/components/Spinner';
-import { CharacterSearchBar } from '@/app/components/CharacterSearchBar';
 import { SearchResultScreen } from '@/app/screens/SearchResultScreen';
 import { getCharacters } from '@/utils/getCharacters';
 import { Suspense } from 'react';
@@ -19,6 +18,8 @@ export default function Home({ params, searchParams }: { params: { locationId: s
 
   const [characters, setCharacters] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +41,19 @@ export default function Home({ params, searchParams }: { params: { locationId: s
     fetchData();
   }, [params, searchParams]);
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    /* @ts-expect-error */
+    const searchValue = e.target?.elements?.search?.value;
+
+    if (!searchValue) {
+      return;
+    }
+    console.log(searchValue, "searched");
+  };
+
+  const searchDefaultValue = characterName || undefined;
+
   return (
     <main>
       <div>
@@ -47,15 +61,17 @@ export default function Home({ params, searchParams }: { params: { locationId: s
         <div className="h-full bg-no-repeat">
           <div className="mt-10 px-10">
             <div className="flex h-12 w-full">
-            <form className="w-full flex">
+            <form onSubmit={onSubmit} className="w-full flex">
               <input
+                ref={inputRef}
                 autoComplete="off"
                 type="search"
                 id="searchByName"
                 name="search"
-                className="h-full w-full pl-5 text-sm  bg-transparent border border-r border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none  "
+                className="h-full w-full pl-5 text-sm  bg-transparent border border-r  border-gray-700 placeholder-gray-400 text-black focus:border-gray-500 outline-none  "
                 placeholder="Search character by name..."
                 required
+                defaultValue={searchDefaultValue}
               />
               <button
                 type="submit"
@@ -80,7 +96,6 @@ export default function Home({ params, searchParams }: { params: { locationId: s
               </button>
             </form>
             </div>
-            <CharacterSearchBar characterName={characterName} />
             <Suspense fallback={<Spinner />}>
               {loading ? (
                 <Spinner />
