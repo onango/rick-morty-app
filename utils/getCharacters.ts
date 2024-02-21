@@ -17,10 +17,18 @@ export const getCharacters = async (
   } else if (characterNames && characterNames.length > 0) {
     url.searchParams.set("name", characterNames.join('&name='));
   }
+  
 
   const res = await fetch(url.href, { cache: "no-store" });
-  const data = await res.json();
+  let data = await res.json();
+ 
+  const searchTerm = name;
 
+  if(searchTerm){
+    data = data.filter(character => {
+      return character.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+  }
   const itemsPerPage = 10;
   
   const count = data.length;
