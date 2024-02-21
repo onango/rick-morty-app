@@ -7,20 +7,17 @@ export const getCharacters = async (
   characterNames?: string[]
 ) => {
   const url = new URL("https://rickandmortyapi.com/api/character/");
-  
-  // Set query parameters for pagination, gender, and name
+
   url.searchParams.set("page", page.toString());
   gender && url.searchParams.set("gender", gender);
   name && url.searchParams.set("name", name);
   
-  // Add query parameters for character IDs or names if provided
   if (characterIds && characterIds.length > 0) {
     url.pathname += `[${characterIds.join(',')}]`;
   } else if (characterNames && characterNames.length > 0) {
     url.searchParams.set("name", characterNames.join('&name='));
   }
 
-  // Fetch initial data with pagination
   const res = await fetch(url.href, { cache: "no-store" });
   const data = await res.json();
   
@@ -29,7 +26,7 @@ export const getCharacters = async (
   //   data: data
   // };
   const count = data.length;
-  const pages = Math.ceil(count / 20); // Assuming 20 characters per page
+  const pages = Math.ceil(count / 20); 
 
   return {
     ok: res.ok,
@@ -37,8 +34,8 @@ export const getCharacters = async (
       info: {
         count,
         pages,
-        next: null, // No pagination for filtered data
-        prev: null // No pagination for filtered data
+        next: null,
+        prev: null
       },
       results: data
     }
