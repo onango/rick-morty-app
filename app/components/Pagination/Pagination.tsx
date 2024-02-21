@@ -98,21 +98,23 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   gender?: string | undefined;
+  currentLocation: string | "";
 }
 
-const bodyUrl = "/?page=";
+const bodyUrl = "?page=";
 const genderUrl = "&gender=";
 
 const getPaginationUrlAndNumber = (
   currentPage: number,
   totalPages: number,
   pageIncrementor: number,
-  gender: string | undefined
+  gender: string | undefined,
+  currentLocation: string | ""
 ) => {
   const url =
     currentPage + pageIncrementor > 0 &&
     currentPage + pageIncrementor < totalPages
-      ? bodyUrl + (currentPage + pageIncrementor)
+      ? currentLocation+bodyUrl + (currentPage + pageIncrementor)
       : "";
 
   const urlWithGender = gender && url ? url + `${genderUrl}${gender}` : url;
@@ -129,60 +131,69 @@ const Pagination: FC<PaginationProps> = ({
   currentPage,
   totalPages,
   gender,
+  currentLocation,
 }) => {
   const prevPageData = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     -10,
-    gender
+    gender,
+    currentLocation
   );
   const nextPageData = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     10,
-    gender
+    gender,
+    currentLocation
   );
 
   const prevPageMinus3Data = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     -3,
-    gender
+    gender,
+    currentLocation
   );
 
   const prevPageMinus2Data = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     -2,
-    gender
+    gender,
+    currentLocation
   );
 
   const prevPageMinus1Data = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     -1,
-    gender
+    gender,
+    currentLocation
   );
 
   const prevPagePlus3Data = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     3,
-    gender
+    gender,
+    currentLocation
   );
 
   const prevPagePlus2Data = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     2,
-    gender
+    gender,
+    currentLocation
   );
 
   const prevPagePlus1Data = getPaginationUrlAndNumber(
     currentPage,
     totalPages,
     1,
-    gender
+    gender,
+    currentLocation
   );
 
   return (
